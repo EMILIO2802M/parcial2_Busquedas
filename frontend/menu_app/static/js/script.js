@@ -5,15 +5,25 @@ const algoritmos = {
     3: { nombre: 'Vuelos DFS', id: 'dfs' }
 };
 
-const ciudades = [
-    'Jiloyork', 'CDMX', 'Queretaro', 'Celaya', 'Sonora', 'Sinaloa',
-    'Zacatecas', 'Monterrey', 'Tamaulipas', 'Oaxaca', 'Guanajuato',
-    'Aguascalientes', 'Morelos', 'Hidalgo', 'Mexicali', 'MTY', 'QRO', 'AGS', 'SLP'
-];
+const ciudadesPorAlgoritmo = {
+    usc: [
+        'Jiloyork', 'Morelos', 'CDMX', 'Hidalgo', 'QRO',
+        'SLP', 'AGS', 'Sonora', 'Mexicali', 'MTY'
+    ],
+    bfs: [
+        'Jiloyork', 'Sonora', 'Guanajuato', 'Oaxaca', 'Sinaloa',
+        'Queretaro', 'Celaya', 'Zacatecas', 'Monterrey', 'Tamaulipas', 'CDMX'
+    ],
+    dfs: [
+        'Jiloyork', 'Sonora', 'Guanajuato', 'Oaxaca', 'Sinaloa',
+        'Queretaro', 'Celaya', 'Zacatecas', 'Monterrey', 'Tamaulipas', 'CDMX'
+    ]
+};
 
-function poblar_selects() {
+function poblar_selects(algoritmoId) {
     const estadoInicial = document.getElementById('estado_inicial');
     const solucion = document.getElementById('solucion');
+    const ciudades = ciudadesPorAlgoritmo[algoritmoId] || ciudadesPorAlgoritmo.bfs;
 
     estadoInicial.innerHTML = '';
     solucion.innerHTML = '';
@@ -44,8 +54,12 @@ function poblar_selects() {
         solucion.appendChild(optionDestino);
     });
 
-    estadoInicial.value = 'Jiloyork';
-    solucion.value = 'Monterrey';
+    estadoInicial.value = ciudades.includes('Jiloyork') ? 'Jiloyork' : ciudades[0];
+    if (algoritmoId === 'usc') {
+        solucion.value = ciudades.includes('AGS') ? 'AGS' : ciudades[ciudades.length - 1];
+    } else {
+        solucion.value = ciudades.includes('Monterrey') ? 'Monterrey' : ciudades[ciudades.length - 1];
+    }
 }
 
 // Evento para seleccionar opción
@@ -58,6 +72,7 @@ function seleccionar_opcion(id) {
     
     // Guardar el algoritmo seleccionado
     document.getElementById('form-algoritmo').dataset.algoritmo = algo.id;
+    poblar_selects(algo.id);
     
     // Limpiar resultados previos
     document.getElementById('resultado-container').style.display = 'none';
@@ -185,5 +200,5 @@ function getCookie(name) {
 
 // Agregar listener para botones con Enter
 document.addEventListener('DOMContentLoaded', function() {
-    poblar_selects();
+    poblar_selects('bfs');
 });

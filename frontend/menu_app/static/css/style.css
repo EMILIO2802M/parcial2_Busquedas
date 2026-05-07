@@ -286,17 +286,22 @@ body {
     padding: 12px;
     border: 2px solid var(--border-color);
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
+    background: #f5f7ff;
+    color: #111827;
     font-size: 1rem;
     transition: var(--transition);
+}
+
+.form-group select option {
+    color: #111827;
+    background: #f5f7ff;
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
     border-color: var(--primary-color);
-    background: rgba(102, 126, 234, 0.1);
+    background: #ffffff;
     box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
 }
 
