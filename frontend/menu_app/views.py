@@ -77,21 +77,20 @@ def ejecutar_algoritmo(request):
     """Ejecuta el algoritmo seleccionado"""
     try:
         data = json.loads(request.body)
-        algoritmo = data.get('algoritmo')
         estado_inicial = normalizar_ciudad(data.get('estado_inicial', 'Jiloyork'))
         solucion = normalizar_ciudad(data.get('solucion', 'Monterrey'))
-        resultado = None
-        
-        if algoritmo == 'usc':
-            resultado = ejecutar_usc(estado_inicial, solucion)
-        elif algoritmo == 'bfs':
-            resultado = ejecutar_bfs(estado_inicial, solucion)
-        elif algoritmo == 'dfs':
-            resultado = ejecutar_dfs(estado_inicial, solucion)
+        resultados = [
+            ejecutar_usc(estado_inicial, solucion),
+            ejecutar_bfs(estado_inicial, solucion),
+            ejecutar_dfs(estado_inicial, solucion),
+        ]
         
         return JsonResponse({
             'success': True,
-            'resultado': resultado,
+            'resultado': {
+                'tipo': 'COMBINADO',
+                'resultados': resultados,
+            },
             'mensaje': 'Búsqueda completada exitosamente'
         })
     except json.JSONDecodeError as e:

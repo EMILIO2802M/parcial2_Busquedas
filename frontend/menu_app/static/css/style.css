@@ -378,6 +378,35 @@ body {
     word-break: break-word;
 }
 
+.resultado-combinado {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.resultado-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.resultado-card h4 {
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.resultado-card-success {
+    border-color: rgba(72, 187, 120, 0.45);
+    background: rgba(72, 187, 120, 0.08);
+}
+
+.resultado-card-error {
+    border-color: rgba(245, 101, 101, 0.45);
+    background: rgba(245, 101, 101, 0.08);
+}
+
 .resultado.error {
     background: rgba(245, 101, 101, 0.1);
     border-color: var(--danger-color);

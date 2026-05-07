@@ -143,22 +143,62 @@ function mostrar_resultado(resultado) {
     const container = document.getElementById('resultado-container');
     const resultadoDiv = document.getElementById('resultado');
     
+    if (resultado.resultados && Array.isArray(resultado.resultados)) {
+        const tarjetas = resultado.resultados.map((item) => {
+            if (item.encontrado) {
+                let detalles = `
+                    <p><strong>✓ Solución encontrada</strong></p>
+                    <p><strong>Ruta:</strong> ${item.ruta ? item.ruta.join(' → ') : 'No disponible'}</p>
+                    <p><strong>Destino final:</strong> ${item.destino || 'No disponible'}</p>
+                `;
+
+                if (item.costo !== undefined) {
+                    detalles += `<p><strong>Costo total:</strong> ${item.costo} km</p>`;
+                }
+
+                return `
+                    <div class="resultado-card resultado-card-success">
+                        <h4>${item.tipo}</h4>
+                        ${detalles}
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="resultado-card resultado-card-error">
+                    <h4>${item.tipo}</h4>
+                    <p><strong>✗ No se encontró solución</strong></p>
+                    <p>Verifica que el estado inicial y destino existan en el grafo.</p>
+                </div>
+            `;
+        }).join('');
+
+        resultadoDiv.innerHTML = `
+            <div class="resultado-combinado">
+                ${tarjetas}
+            </div>
+        `;
+        resultadoDiv.classList.remove('error');
+        container.style.display = 'block';
+        return;
+    }
+
     let html = '';
-    
+
     if (resultado.encontrado) {
         html = `
             <p><strong>✓ Solución encontrada</strong></p>
             <p><strong>Tipo:</strong> ${resultado.tipo}</p>
         `;
-        
+
         if (resultado.ruta) {
             html += `<p><strong>Ruta:</strong><br>${resultado.ruta.join(' → ')}</p>`;
         }
-        
+
         if (resultado.destino) {
             html += `<p><strong>Destino final:</strong> ${resultado.destino}</p>`;
         }
-        
+
         if (resultado.costo !== undefined) {
             html += `<p><strong>Costo total:</strong> ${resultado.costo} km</p>`;
         }
@@ -166,7 +206,7 @@ function mostrar_resultado(resultado) {
         html = `<p><strong>✗ No se encontró solución</strong></p>
                 <p>Verifica que el estado inicial y destino existan en el grafo.</p>`;
     }
-    
+
     resultadoDiv.innerHTML = html;
     resultadoDiv.classList.remove('error');
     container.style.display = 'block';
