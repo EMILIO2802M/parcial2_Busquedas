@@ -8,7 +8,40 @@ from django.views.decorators.http import require_http_methods
 # Agregar la carpeta padre al path para importar los scripts
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
-from arbol import Nodo
+CIUDADES_CANONICAS = {
+    'jiloyork': 'Jiloyork',
+    'sonora': 'Sonora',
+    'guanajuato': 'Guanajuato',
+    'oaxaca': 'Oaxaca',
+    'sinaloa': 'Sinaloa',
+    'queretaro': 'Queretaro',
+    'celaya': 'Celaya',
+    'zacatecas': 'Zacatecas',
+    'monterrey': 'Monterrey',
+    'tamaulipas': 'Tamaulipas',
+    'cdmx': 'CDMX',
+    'guadalajara': 'Guadalajara',
+    'puerto_vallarta': 'Puerto_Vallarta',
+    'aguascalientes': 'Aguascalientes',
+    'morelos': 'Morelos',
+    'hidalgo': 'Hidalgo',
+    'mexicali': 'Mexicali',
+    'mty': 'MTY',
+    'qro': 'QRO',
+    'ags': 'AGS',
+    'slp': 'SLP',
+}
+
+
+def normalizar_ciudad(valor):
+    """Convierte la entrada del usuario al nombre canónico del grafo."""
+    if valor is None:
+        return ''
+    texto = str(valor).strip()
+    if not texto:
+        return ''
+    llave = texto.replace(' ', '_').lower()
+    return CIUDADES_CANONICAS.get(llave, texto)
 
 
 def index(request):
@@ -45,11 +78,9 @@ def ejecutar_algoritmo(request):
     try:
         data = json.loads(request.body)
         algoritmo = data.get('algoritmo')
-        estado_inicial = data.get('estado_inicial', 'Jiloyork')
-        solucion = data.get('solucion', 'Monterrey')
-        
+        estado_inicial = normalizar_ciudad(data.get('estado_inicial', 'Jiloyork'))
+        solucion = normalizar_ciudad(data.get('solucion', 'Monterrey'))
         resultado = None
-        ruta = None
         
         if algoritmo == 'usc':
             resultado = ejecutar_usc(estado_inicial, solucion)
@@ -61,9 +92,9 @@ def ejecutar_algoritmo(request):
         return JsonResponse({
             'success': True,
             'resultado': resultado,
-            'mensaje': f'Búsqueda completada exitosamente'
+            'mensaje': 'Búsqueda completada exitosamente'
         })
-    except Exception as e:
+    except json.JSONDecodeError as e:
         return JsonResponse({
             'success': False,
             'error': str(e)
