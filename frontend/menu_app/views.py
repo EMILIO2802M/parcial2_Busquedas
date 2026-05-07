@@ -103,23 +103,9 @@ def ejecutar_algoritmo(request):
 
 def ejecutar_usc(estado_inicial, solucion):
     """Ejecuta la búsqueda USC desde Carretera_USC.py"""
-    from Carretera_USC import buscar_solucion_USC
-    
-    # Definir conexiones (costos de carreteras) - diccionario de diccionarios
-    conexiones = {
-        'Jiloyork': {'CDMX': 125, 'QRO': 513},
-        'Morelos': {'QRO': 524},
-        'CDMX': {'Jiloyork': 125, 'QRO': 423, 'Hidalgo': 491},
-        'Hidalgo': {'CDMX': 491, 'QRO': 356, 'Mexicali': 309, 'MTY': 346},
-        'QRO': {'SLP': 203, 'Morelos': 514, 'Jiloyork': 513, 'CDMX': 423, 'MTY': 603, 'Sonora': 437, 'Hidalgo': 356, 'Mexicali': 313, 'AGS': 599},
-        'SLP': {'AGS': 390, 'QRO': 203},
-        'AGS': {'SLP': 390, 'QRO': 599},
-        'Sonora': {'QRO': 437, 'Mexicali': 394},
-        'Mexicali': {'MTY': 296, 'Hidalgo': 309, 'QRO': 313},
-        'MTY': {'Mexicali': 296, 'QRO': 603, 'Hidalgo': 346},
-    }
-    
-    resultado = buscar_solucion_USC(conexiones, estado_inicial, solucion)
+    from Carretera_USC import CONEXIONES, buscar_solucion_USC
+
+    resultado = buscar_solucion_USC(CONEXIONES, estado_inicial, solucion)
     
     if resultado:
         # Reconstruir la ruta desde el nodo final hacia atrás

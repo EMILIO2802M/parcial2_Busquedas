@@ -1,6 +1,21 @@
 # Viaje por carretera por busqueda de costo uniforme
 from arbol import Nodo
 
+
+CONEXIONES = {
+    'Jiloyork': {'CDMX': 125, 'Queretaro': 513, 'Sinaloa': 420},
+    'CDMX': {'Jiloyork': 125, 'Queretaro': 423, 'Oaxaca': 491, 'Tamaulipas': 356},
+    'Queretaro': {'Jiloyork': 513, 'CDMX': 423, 'Monterrey': 203, 'Celaya': 314},
+    'Monterrey': {'Queretaro': 203, 'Sinaloa': 299, 'Zacatecas': 346},
+    'Sinaloa': {'Jiloyork': 420, 'Celaya': 280, 'Sonora': 394, 'Monterrey': 299},
+    'Celaya': {'Jiloyork': 280, 'Sinaloa': 280, 'Guanajuato': 135},
+    'Zacatecas': {'Sonora': 250, 'Monterrey': 346, 'Queretaro': 370},
+    'Sonora': {'Zacatecas': 250, 'Sinaloa': 394},
+    'Oaxaca': {'Queretaro': 491, 'CDMX': 491},
+    'Tamaulipas': {'Queretaro': 356, 'CDMX': 356},
+    'Guanajuato': {'Aguascalientes': 160, 'Celaya': 135},
+}
+
 def buscar_solucion_USC(conexiones, estado_inicial, solucion):
     solucionado = False
     nodos_visitados = []
@@ -47,32 +62,18 @@ def buscar_solucion_USC(conexiones, estado_inicial, solucion):
             nodo.set_hijos(lista_hijos)
 
 if __name__ == "__main__":
-    CONEXIONES = {
-        'Jiloyork': {'CDMX': 125, 'QRO': 513},
-        'Morelos': {'QRO': 524},
-        'CDMX': {'Jiloyork': 125, 'QRO': 423, 'Hidalgo': 491},
-        'Hidalgo': {'CDMX': 491, 'QRO': 356, 'Mexicali': 309, 'MTY': 346},
-        'QRO': {'SLP': 203, 'Morelos': 514, 'Jiloyork': 513, 'CDMX': 423, 'MTY': 603, 'Sonora': 437, 'Hidalgo': 356, 'Mexicali': 313, 'AGS': 599},
-        'SLP': {'AGS': 390, 'QRO': 203, },
-        'AGS': {'SLP': 390, 'QRO': 599},
-        'Sonora': {'QRO': 437, 'Mexicali': 394,},
-        'Mexicali': {'MTY': 296, 'Hidalgo': 309, 'QRO': 313, },
-        'MTY': {'Mexicali': 296, 'QRO': 603, 'Hidalgo': 346},
-    }
-
-    estado_inicial = 'Jiloyork'
-    solucion = 'AGS'
-    nodo_solucion = buscar_solucion_USC(CONEXIONES, estado_inicial, solucion)
+    estado_inicial_demo = 'Jiloyork'
+    solucion_demo = 'Monterrey'
+    nodo_solucion = buscar_solucion_USC(CONEXIONES, estado_inicial_demo, solucion_demo)
     # Mostrar resultado
     resultado = []
-    nodo = nodo_solucion
-    while nodo.get_padre() != None:
-        resultado.append(nodo.get_datos())
-        nodo = nodo.get_padre()
-    resultado.append(estado_inicial)
+    nodo_actual = nodo_solucion
+    while nodo_actual.get_padre() != None:
+        resultado.append(nodo_actual.get_datos())
+        nodo_actual = nodo_actual.get_padre()
+    resultado.append(estado_inicial_demo)
     resultado.reverse()
     print("Ruta encontrada:", resultado)
     print("Costo total:", nodo_solucion.get_costo())
 
-    # JILOYORK, QRO, SLP, AGS
-    # COSOTO 1,106 KM
+    # JILOYORK, CDMX, QUERETARO, MONTERREY

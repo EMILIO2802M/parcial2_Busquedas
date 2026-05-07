@@ -7,8 +7,8 @@ const algoritmos = {
 
 const ciudadesPorAlgoritmo = {
     usc: [
-        'Jiloyork', 'Morelos', 'CDMX', 'Hidalgo', 'QRO',
-        'SLP', 'AGS', 'Sonora', 'Mexicali', 'MTY'
+        'Jiloyork', 'Sonora', 'Guanajuato', 'Oaxaca', 'Sinaloa',
+        'Queretaro', 'Celaya', 'Zacatecas', 'Monterrey', 'Tamaulipas', 'CDMX'
     ],
     bfs: [
         'Jiloyork', 'Sonora', 'Guanajuato', 'Oaxaca', 'Sinaloa',
@@ -56,7 +56,7 @@ function poblar_selects(algoritmoId) {
 
     estadoInicial.value = ciudades.includes('Jiloyork') ? 'Jiloyork' : ciudades[0];
     if (algoritmoId === 'usc') {
-        solucion.value = ciudades.includes('AGS') ? 'AGS' : ciudades[ciudades.length - 1];
+        solucion.value = ciudades.includes('Monterrey') ? 'Monterrey' : ciudades[ciudades.length - 1];
     } else {
         solucion.value = ciudades.includes('Monterrey') ? 'Monterrey' : ciudades[ciudades.length - 1];
     }
