@@ -5,6 +5,49 @@ const algoritmos = {
     3: { nombre: 'Vuelos DFS', id: 'dfs' }
 };
 
+const ciudades = [
+    'Jiloyork', 'CDMX', 'Queretaro', 'Celaya', 'Sonora', 'Sinaloa',
+    'Zacatecas', 'Monterrey', 'Tamaulipas', 'Oaxaca', 'Guanajuato',
+    'Aguascalientes', 'Morelos', 'Hidalgo', 'Mexicali', 'MTY', 'QRO', 'AGS', 'SLP'
+];
+
+function poblar_selects() {
+    const estadoInicial = document.getElementById('estado_inicial');
+    const solucion = document.getElementById('solucion');
+
+    estadoInicial.innerHTML = '';
+    solucion.innerHTML = '';
+
+    const placeholderInicial = document.createElement('option');
+    placeholderInicial.value = '';
+    placeholderInicial.textContent = 'Selecciona una ciudad';
+    placeholderInicial.disabled = true;
+    placeholderInicial.selected = true;
+    estadoInicial.appendChild(placeholderInicial);
+
+    const placeholderDestino = document.createElement('option');
+    placeholderDestino.value = '';
+    placeholderDestino.textContent = 'Selecciona una ciudad';
+    placeholderDestino.disabled = true;
+    placeholderDestino.selected = true;
+    solucion.appendChild(placeholderDestino);
+
+    ciudades.forEach((ciudad) => {
+        const optionInicial = document.createElement('option');
+        optionInicial.value = ciudad;
+        optionInicial.textContent = ciudad;
+        estadoInicial.appendChild(optionInicial);
+
+        const optionDestino = document.createElement('option');
+        optionDestino.value = ciudad;
+        optionDestino.textContent = ciudad;
+        solucion.appendChild(optionDestino);
+    });
+
+    estadoInicial.value = 'Jiloyork';
+    solucion.value = 'Monterrey';
+}
+
 // Evento para seleccionar opción
 function seleccionar_opcion(id) {
     const modal = document.getElementById('modal');
@@ -142,12 +185,5 @@ function getCookie(name) {
 
 // Agregar listener para botones con Enter
 document.addEventListener('DOMContentLoaded', function() {
-    const inputs = document.querySelectorAll('input[type="text"]');
-    inputs.forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('form-algoritmo').dispatchEvent(new Event('submit'));
-            }
-        });
-    });
+    poblar_selects();
 });

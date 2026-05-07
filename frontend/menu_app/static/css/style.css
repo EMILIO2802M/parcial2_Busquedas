@@ -280,7 +280,8 @@ body {
     font-size: 0.95rem;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
     width: 100%;
     padding: 12px;
     border: 2px solid var(--border-color);
@@ -291,7 +292,8 @@ body {
     transition: var(--transition);
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
     outline: none;
     border-color: var(--primary-color);
     background: rgba(102, 126, 234, 0.1);
