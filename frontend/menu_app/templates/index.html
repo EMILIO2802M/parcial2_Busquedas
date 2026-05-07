@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmos de Búsqueda - Menú Principal</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title"> Algoritmos de Búsqueda</h1>
+            <p class="subtitle">Selecciona uno de los algoritmos disponibles</p>
+        </header>
+
+        <main class="menu-container">
+            <div class="menu-grid">
+                {% for opcion in opciones %}
+                <div class="menu-card" onclick="seleccionar_opcion({{ opcion.id }})" style="--card-color: {{ opcion.color }}">
+                    <div class="card-icon">{{ opcion.icon }}</div>
+                    <h2 class="card-title">{{ opcion.nombre }}</h2>
+                    <p class="card-description">{{ opcion.descripcion }}</p>
+                    <button class="card-button">Seleccionar</button>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+
+        <!-- Modal para ejecutar el algoritmo -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrar_modal()">&times;</span>
+                <h2 id="modal-title">Configurar Búsqueda</h2>
+                
+                <form id="form-algoritmo">
+                    <div class="form-group">
+                        <label for="estado_inicial">Estado Inicial:</label>
+                        <input type="text" id="estado_inicial" name="estado_inicial" value="Jiloyork" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="solucion">Destino/Solución:</label>
+                        <input type="text" id="solucion" name="solucion" value="Monterrey" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Ejecutar Búsqueda</button>
+                </form>
+                
+                <div id="resultado-container" class="resultado-container" style="display: none;">
+                    <h3>Resultado de la Búsqueda</h3>
+                    <div id="resultado" class="resultado"></div>
+                </div>
+                
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Ejecutando algoritmo...</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; Oscar Emilio Martinez 3601 | Parcial 2</p>
+        </footer>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
